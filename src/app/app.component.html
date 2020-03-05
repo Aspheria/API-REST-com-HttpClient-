@@ -1,0 +1,66 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Gerenciamento de Pseudo City Codes</li>
+  </ol>
+</nav>
+<div class="container">
+  <div class="card list-company">
+    <h5 class="card-header">Lista de pcc</h5>
+    <div class="card-body">
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Codigo</th>
+              <th scope="col">Descricao</th>
+              <th scope="col">CompanyId</th>
+              <th scope="col">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pcc of pccs">
+              <td>{{pcc.id}}</td>
+              <td>{{pcc.code}}</td>
+              <td>{{pcc.description}}</td>
+              <td>{{pcc.company | currency}}</td>
+              <td>
+                <button type="button" class="btn btn-warning btn-sm" (click)="editPcc(pcc)">Editar</button>
+                <button type="button" class="btn btn-danger btn-sm ml-1" (click)="deletePcc(pcc)">Deletar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+  <div class="card add-pcc">
+      <h5 class="card-header">Adicionar/Atualizar </h5>
+      <div class="card-body">
+          <form id="add-form" (ngSubmit)="f.form.valid && savePcc(f)" #f="ngForm" novalidate>
+            <div class="form-group">
+                <label for="code">codigo</label>
+                <input type="text" [(ngModel)]="pcc.code" id="code" name="code" #code="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && code.invalid }" placeholder="Digite o codigo">
+                <div *ngIf="f.submitted && code.invalid" class="invalid-feedback">
+                    <div *ngIf="code.errors.required">Codigo é obrigatório</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Descrição</label>
+                <input type="text" [(ngModel)]="pcc.description" id="description" name="description" #description="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" placeholder="Digite a descrição">
+                <div *ngIf="f.submitted && color.invalid" class="invalid-feedback">
+                    <div *ngIf="description.errors.required">descrição é obrigatória</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="company">Empresa</label>
+                <input type="number" [(ngModel)]="pcc.company" id="company" name="company" #company="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && company.invalid }" placeholder="Digite o preço">
+                <div *ngIf="f.submitted && company.invalid" class="invalid-feedback">
+                    <div *ngIf="company.errors.required">Companhia é obrigatório</div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-add-pcc">Salvar</button>
+            <button type="reset" class="btn btn-secondary btn-add-pcc" (click)="cleanForm(f)">Cancelar</button>
+          </form>
+      </div>
+    </div>
+</div>
